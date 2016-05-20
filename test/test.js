@@ -1,5 +1,6 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
+import Index from '../src/index';
 
 describe('Test', function() {
 
