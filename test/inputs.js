@@ -6,7 +6,7 @@ import {Input} from '../src/index';
 import assert from 'assert';
 import Rx from 'rx';
 
-describe('Froms', function() {
+describe('Input', function() {
 
   chai.use(chaiAsPromised);
 
@@ -21,7 +21,7 @@ describe('Froms', function() {
     this.subject.onCompleted();
   })
 
-  it('should create a Form that can be submitted', function () {
+  it('should create an Input that can observe', function () {
     renderer.render( <Input observeOn={this.subject} /> );
     this.scheduler.scheduleAbsolute(null, 100, () => this.subject.onNext({value: "hola"}));
     this.scheduler.scheduleAbsolute(null, 150, () => assert(renderer.getMountedInstance().state.value, "hola"));
