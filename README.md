@@ -32,11 +32,12 @@ class Input extends RxReact.Component {
     getStateStream(){return this.state.observeOn.map(x => x.data)}
     
     render(){return(
-        <input {..this.state} />
+        <input {...this.state} />
     )}
 }
 ```
--Every component MUST provide a `publishOn` property, on which it will publish its events according to the [Event Types](#EventTypes) guidance.
+
+- Every component MUST provide a `publishOn` property, on which it will publish its events according to the [Event Types](#EventTypes) guidance.
 
 ##Event Types
 [TBW]
