@@ -6,6 +6,12 @@ import {Input} from '../src/index';
 import assert from 'assert';
 import Rx from 'rx';
 
+// TODO: Move
+chai.assert.includeDeepMember = function(superset, subset, msg){
+  //new chai.Assertion(superset, msg).to.deep.include(subset);
+  chai.assert.includeDeepMembers(superset, [subset], msg);
+};
+
 describe('Input', function() {
 
   chai.use(chaiAsPromised);
@@ -29,11 +35,16 @@ describe('Input', function() {
   });
 
   it('should create an Input that publishOn values', function(){
+    var toPublish = {data: {value: "chau"}};
     this.renderer.render( <Input observeOn={this.subject} publishOn={this.publishSubj} /> );
-    this.scheduler.scheduleAbsolute(null, 100, () => this.subject.onNext({data: {value: "chau"}}));
-    var res = this.scheduler.startScheduler(() => this.publishSubj);
-    console.log(res)
-    assert(res.messages.length, 1)
+    this.scheduler.scheduleAbsolute(null, 100, () => this.subject.onNext(toPublish));
+    
+    var published = [];
+    this.publishSubj.subscribe(x => published.push(x));
+    
+    this.scheduler.start();
+
+    chai.assert.includeDeepMember(published, {data: {value: "chaus"}});
   });
 
 });
