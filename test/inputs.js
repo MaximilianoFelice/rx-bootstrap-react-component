@@ -44,7 +44,7 @@ describe('Input', function() {
     
     this.scheduler.start();
 
-    chai.assert.includeDeepMember(published, {data: {value: "chaus"}});
+    chai.assert.includeDeepMember(published, toPublish);
   });
 
 });
