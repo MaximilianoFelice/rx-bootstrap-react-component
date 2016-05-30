@@ -47,4 +47,33 @@ describe('Input', function() {
     chai.assert.includeDeepMember(published, toPublish);
   });
 
+  it('should create an input with the supplied props', function(){
+    this.renderer.render( <Input type="text" /> );
+
+    chai.expect(
+      this.renderer
+          .getRenderOutput()
+          .props
+          .type
+      ).to.be.equals("text");
+  });
+
+  it('should not render observerOn and publishOn properties', function(){
+    this.renderer.render( <Input observeOn={this.subject} /> );
+
+    chai.expect(
+      this.renderer
+          .getRenderOutput()
+          .props
+          .observeOn
+      ).to.be.undefinded;
+
+    chai.expect(
+      this.renderer
+          .getRenderOutput()
+          .props
+          .publishOn
+      ).to.be.undefinded;
+  });
+
 });
