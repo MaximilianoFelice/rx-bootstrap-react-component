@@ -14,6 +14,6 @@ export default class Input extends RxReact.Component {
   getStateStream(){ return this.props.observeOn.map(x => x.data) }
 
   render(){return (
-    <input {...this.state} />
+    <input {...this.props} />
   )}
 }
