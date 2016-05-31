@@ -26,7 +26,7 @@ describe('Input', function() {
   it('should create an Input that observeOn values', function(){
     renderer.render( <Input observeOn={subject} /> );
     scheduler.scheduleAbsolute(null, 100, () => subject.onNext({data: {value: "hola"}}));
-    scheduler.scheduleAbsolute(null, 150, () => assert(renderer.getMountedInstance().state.value, "hola"));
+    scheduler.scheduleAbsolute(null, 150, () => expect(renderer.getMountedInstance().state.value, "hola"));
     scheduler.start();
   });
 
