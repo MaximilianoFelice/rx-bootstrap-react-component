@@ -48,14 +48,15 @@ describe('Input', function() {
   });
 
   it('should create an input with the supplied props', function(){
-    this.renderer.render( <Input type="text" /> );
+    var props = {type: "text", style: "color: red;"};
+
+    this.renderer.render( <Input {...props} /> );
 
     chai.expect(
       this.renderer
           .getRenderOutput()
           .props
-          .type
-      ).to.be.equals("text");
+      ).to.deep.equals(props);
   });
 
   it('should not render observerOn and publishOn properties', function(){
