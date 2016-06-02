@@ -4,6 +4,7 @@ import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import {Label, Input, InputField} from '../src/index';
 import Rx from 'rx';
+import Promise from 'when';
 
 describe('Input', function() {
 
@@ -51,9 +52,12 @@ describe('Input', function() {
   });
 
   it('should render an InputField with a label', function(){
-    renderer.render( <InputField labelText="texto" /> );
-    // Refactor
-    expect(renderer.getRenderOutput().props.children[0].type).to.equal(Label);
+    renderer.render( <InputField inputProps={{text: "foo"}} /> );
+    let instance = renderer.getMountedInstance();
+    let inputText = new Promise();
+    instance.childrenObservable.subscribe(x => inputText.done(x));
+    instance.componentDidMount();
+    expect(inputText).to.eventually.equal({data: {text: "foo"}});
   });
 
 });

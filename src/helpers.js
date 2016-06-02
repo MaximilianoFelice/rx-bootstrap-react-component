@@ -1,8 +1,8 @@
-function argsToArray(args){
+export function argsToArray(args){
   return Array.prototype.slice.call(args);
 };
 
-function without(keys, object){
+export function without(keys, object){
   if (!Array.isArray(keys)){
     var args = argsToArray(arguments)
     var object = args[args.length-1];
@@ -13,8 +13,15 @@ function without(keys, object){
   return copy;
 };
 
-function propagable(props, state){
+export function propagable(props, state){
   return without('observeOn', 'publishOn', Object.assign.apply(this, [{}].concat(argsToArray(arguments))));
 };
 
-export {without, propagable};
+export function propagableObsevable(observable, field){
+  return observable.map(x => x.data[field]).filter(isDefined).map(x => {data: x})
+};
+
+export function isDefined(arg){return arg !== undefined};
+export function isNotDefined(arg){return arg === undefined};
+
+export function getData(val){return val.data};
