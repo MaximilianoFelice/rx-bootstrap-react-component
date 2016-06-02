@@ -1,5 +1,6 @@
 import React from 'react';
 import Rx from 'rx';
+import {propagable} from '../helpers';
 var FuncSubject = require('rx-react').FuncSubject;
 
 export default class Button extends React.Component {
@@ -21,7 +22,7 @@ export default class Button extends React.Component {
 
   render() {
     return (
-      <button {...propagate(this.props, this.state)} 
+      <button {...propagable(this.props, this.state)} 
         className={`btn ${this.props.className} btn-${this.props.as}`} 
         onClick={this.buttonClicked} 
         type={this.props.type} 
