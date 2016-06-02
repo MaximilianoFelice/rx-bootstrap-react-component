@@ -2,7 +2,7 @@
   "name": "rx-bootstrap-react-components",
   "version": "0.0.1",
   "description": "React Components with Bootstrap and ReactiveX",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test-brk": "mocha --compilers js:babel-core/register --debug-brk",
     "test": "mocha --compilers js:babel-core/register",
