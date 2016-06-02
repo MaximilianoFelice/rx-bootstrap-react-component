@@ -23,7 +23,7 @@ export default class Modal extends React.Component {
 
   body(){ if(this.state && this.state.body) return <ModalBody>{this.state.body()}</ModalBody> }
 
-  footer(){ if(this.state && this.state.footer) return <ModalFooter /> }
+  footer(){ if(this.state && this.state.footer) return <ModalFooter>{this.state.footer()}</ModalFooter> }
 
   render() { return (
       <div className="modal fade" tabindex="-1" role="dialog" ref="ModalName">
@@ -64,8 +64,7 @@ export class ModalFooter extends React.Component{
   render() {
     return (
       <div className="ModalFooter modal-footer">
-        <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" className="btn btn-primary">Save changes</button>
+        {this.props.children}
       </div>
     )
   }
