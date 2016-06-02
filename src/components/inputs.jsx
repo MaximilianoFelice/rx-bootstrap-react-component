@@ -1,7 +1,7 @@
 import React from 'react';
 import Rx from 'rx';
 import RxReact from 'rx-react';
-import {without} from '../helpers';
+import {propagable} from '../helpers';
 
 export default class Input extends RxReact.Component {
   static defaultProps = { observeOn: new Rx.Subject(), publishOn: new Rx.Subject() }
@@ -9,6 +9,6 @@ export default class Input extends RxReact.Component {
   getStateStream(){ return this.props.observeOn.map(x => x.data) }
 
   render(){return (
-    <input {...without('observeOn', 'publishOn', Object.assign({}, this.props, this.state))} />
+    <input {...propagable(this.props, this.state)} />
   )}
 }
