@@ -7,5 +7,10 @@ export default class BaseComponent extends RxReact.Component {
     publishOn: new Rx.Subject()
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   getStateStream() { return this.props.observeOn; }
 }
