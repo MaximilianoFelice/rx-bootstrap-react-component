@@ -32,7 +32,6 @@ export class InputField extends BaseComponent {
     <div>
       <Label observeOn={this.labelObs} />
       <Input observeOn={this.inputObs} />
-      //<InputErrors observeOn={this.errorsObs} />
     </div>
   )}
 }
