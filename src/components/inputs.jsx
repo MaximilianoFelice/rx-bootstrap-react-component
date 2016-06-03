@@ -3,13 +3,9 @@ import Rx from 'rx';
 import RxReact from 'rx-react';
 import {isDefined, getData, propagable, propagableObsevable} from '../helpers';
 import Label from './label';
+import BaseComponent from "./base"
 
-export class InputField extends RxReact.Component {
-  static defaultProps = {
-    observeOn: new Rx.Subject(),
-    publishOn: new Rx.Subject()
-  }
-
+export class InputField extends BaseComponent {
   constructor(props){
     super(props);
 
@@ -18,35 +14,41 @@ export class InputField extends RxReact.Component {
 
     this.labelObs = this.childrenObservable.map(x => { return { data: x.data.labelProps }});
     this.inputObs = this.childrenObservable.map(x => { return { data: x.data.inputProps }});
-
-    //this.labelObs = this.childrenObservable.map(getData).map(x =<)
-    //this.labelObs = propagableObsevable(this.childrenObservable, 'labelProps').do(x => console.log(x))
-    //this.inputObs = propagableObsevable(this.childrenObservable, 'inputProps');
+    //this.inputErrorsObs =
+      //this.childrenObservable.map(x => { return { data: x.data.inputErrors }});
   }
 
   componentDidMount(){
     this.parentSubject.onNext({data: {
       labelProps: this.props.labelProps,
-      inputProps: this.props.inputProps
+      inputProps: this.props.inputProps,
+      //inputErrors: this.props.inputErrors
     }})
   }
-  
-  getStateStream(){ return this.props.observeOn.map(getData) }
 
   render(){return (
     <div>
       <Label observeOn={this.labelObs} />
       <Input observeOn={this.inputObs} />
+      <InputErrors observeOn={this.inputErrorsObs} />
     </div>
   )}
 }
 
-export class Input extends RxReact.Component {
-  static defaultProps = { observeOn: new Rx.Subject(), publishOn: new Rx.Subject() }
-  
-  getStateStream(){ return this.props.observeOn.map(getData) }
-
+export class Input extends BaseComponent {
   render(){return (
     <input {...propagable(this.props, this.state)} />
   )}
+}
+
+export class InputErrors extends BaseComponent {
+  renderErrorMessage(str) {
+    return <span className="help-block">{str}</span>;
+  }
+
+  render() {
+    return <div>
+      {this.state.errorMessages.map(this.renderErrorMessage)}
+    </div>;
+  }
 }

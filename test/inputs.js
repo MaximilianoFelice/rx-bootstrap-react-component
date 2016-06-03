@@ -46,7 +46,7 @@ describe('Input', function() {
   it('should change input type on the fly', function(){
     renderer.render( <Input observeOn={subject} type="submit" /> );
     expect(renderer.getRenderOutput().props).to.deep.equal({type: 'submit'});
-    scheduler.scheduleAbsolute(null, 100, () => subject.onNext({data: {type: 'email'}}));
+    scheduler.scheduleAbsolute(null, 100, () => subject.onNext({type: 'email'}));
     scheduler.scheduleAbsolute(null, 150, () => expect(renderer.getRenderOutput().props).to.deep.equal({type: 'email'}));
     scheduler.start();
   });
@@ -58,5 +58,4 @@ describe('Input', function() {
     instance.labelObs.subscribe(x => expect(x).to.deep.equal({data: {text: "foo"}}) )
     instance.componentDidMount();
   });
-
 });
