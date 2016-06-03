@@ -4,7 +4,7 @@ import React from 'react';
 import ReactTestUtils from 'react-addons-test-utils';
 import {Label, Input, InputField} from '../src/index';
 import Rx from 'rx';
-import Promise from 'when';
+import when from 'when';
 
 describe('Input', function() {
 
@@ -54,18 +54,21 @@ describe('Input', function() {
   it('should render an InputField with a label', function(){
     renderer.render(<InputField labelProps={{text: "foo"}} /> );
     let instance = renderer.getMountedInstance();
-
-    instance.labelObs.subscribe(x => expect(x).to.deep.equal({data: {text: "foo"}}) )
+    let inputText = when.promise((resolve, reject) => {
+      instance.labelObs.subscribe(x => resolve(x));
+    });
     instance.componentDidMount();
+    return expect(inputText).to.eventually.deep.equal({data: {text: "foo"}});
   });
 
   it('should render an InputField with a errors', function(){
     const errors = ["TEST1", "TEST2"];
-
     renderer.render(<InputField errors={{errors}}/> );
-
     let instance = renderer.getMountedInstance();
-    instance.errorsObs.subscribe(x => expect(x).to.deep.equal({data: {errors: errors}}) )
+    let inputText = when.promise((resolve, reject) => {
+      instance.errorsObs.subscribe(x => resolve(x));
+    });
     instance.componentDidMount();
+    return expect(inputText).to.eventually.deep.equal({data: {errors: errors}});
   });
 });
