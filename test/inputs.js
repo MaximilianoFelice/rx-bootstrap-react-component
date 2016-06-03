@@ -52,12 +52,12 @@ describe('Input', function() {
   });
 
   it('should render an InputField with a label', function(){
-    renderer.render( <InputField inputProps={{text: "foo"}} /> );
+    renderer.render( <InputField labelProps={{text: "foo"}} /> );
     let instance = renderer.getMountedInstance();
     let inputText = new Promise();
     instance.childrenObservable.subscribe(x => inputText.done(x));
     instance.componentDidMount();
-    expect(inputText).to.eventually.equal({data: {text: "foo"}});
+    return expect(inputText).to.eventually.equal({data: {text: "foo"}});
   });
 
 });

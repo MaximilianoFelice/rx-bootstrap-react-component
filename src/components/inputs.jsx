@@ -1,14 +1,18 @@
 import React from 'react';
 import Rx from 'rx';
 import RxReact from 'rx-react';
-import {getData, propagable, propagableObsevable} from '../helpers';
+import {isDefined, getData, propagable, propagableObsevable} from '../helpers';
 import Label from './label';
 
 export class InputField extends RxReact.Component {
   constructor(props){
     super(props);
     this.parentSubject = new Rx.Subject();
-    this.childrenObservable = this.props.observeOn.merge(this.parentSubject);
+    var aux = this.parentSubject.merge(this.props.observeOn);
+    this.childrenObservable = aux;
+    this.labelObs = aux.do(console.log).map(x => x.data[field]).filter(isDefined).map(x => {data: x});
+    // this.labelObs = propagableObsevable(this.childrenObservable, 'labelProps').do(x => console.log(x))
+    this.inputObs = propagableObsevable(this.childrenObservable, 'inputProps');
   }
 
   componentDidMount(){
@@ -21,8 +25,8 @@ export class InputField extends RxReact.Component {
 
   render(){return (
     <div>
-      <Label observeOn={propagableObsevable(this.childrenObservable, 'labelProps')} />
-      <Input observeOn={propagableObsevable(this.childrenObservable, 'inputProps')} />
+      <Label observeOn={this.labelObs} />
+      <Input observeOn={this.inputObs} />
     </div>
   )}
 }
