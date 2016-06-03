@@ -52,10 +52,20 @@ describe('Input', function() {
   });
 
   it('should render an InputField with a label', function(){
-    renderer.render( <InputField labelProps={{text: "foo"}} /> );
+    renderer.render(<InputField labelProps={{text: "foo"}} /> );
     let instance = renderer.getMountedInstance();
 
     instance.labelObs.subscribe(x => expect(x).to.deep.equal({data: {text: "foo"}}) )
+    instance.componentDidMount();
+  });
+
+  it('should render an InputField with a errors', function(){
+    const errors = ["TEST1", "TEST2"];
+
+    renderer.render(<InputField errors={{errors}}/> );
+
+    let instance = renderer.getMountedInstance();
+    instance.errorsObs.subscribe(x => expect(x).to.deep.equal({data: {errors: errors}}) )
     instance.componentDidMount();
   });
 });

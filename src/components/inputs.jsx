@@ -12,17 +12,19 @@ export class InputField extends BaseComponent {
     this.parentSubject = new Rx.Subject();
     this.childrenObservable = this.parentSubject.merge(this.props.observeOn);
 
-    this.labelObs = this.childrenObservable.map(x => { return { data: x.data.labelProps }});
-    this.inputObs = this.childrenObservable.map(x => { return { data: x.data.inputProps }});
-    //this.inputErrorsObs =
-      //this.childrenObservable.map(x => { return { data: x.data.inputErrors }});
+    this.labelObs =
+      this.childrenObservable.map(x => { return { data: x.data.labelProps }});
+    this.inputObs =
+      this.childrenObservable.map(x => { return { data: x.data.inputProps }});
+    this.errorsObs =
+      this.childrenObservable.map(x => { return { data: x.data.errors }});
   }
 
   componentDidMount(){
     this.parentSubject.onNext({data: {
       labelProps: this.props.labelProps,
       inputProps: this.props.inputProps,
-      //inputErrors: this.props.inputErrors
+      errors: this.props.errors
     }})
   }
 
@@ -30,7 +32,7 @@ export class InputField extends BaseComponent {
     <div>
       <Label observeOn={this.labelObs} />
       <Input observeOn={this.inputObs} />
-      <InputErrors observeOn={this.inputErrorsObs} />
+      <InputErrors observeOn={this.errorsObs} />
     </div>
   )}
 }
@@ -48,7 +50,7 @@ export class InputErrors extends BaseComponent {
 
   render() {
     return <div>
-      {this.state.errorMessages.map(this.renderErrorMessage)}
+      {this.state.errors.map(this.renderErrorMessage)}
     </div>;
   }
 }
