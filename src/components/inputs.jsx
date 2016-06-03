@@ -5,21 +5,31 @@ import {isDefined, getData, propagable, propagableObsevable} from '../helpers';
 import Label from './label';
 
 export class InputField extends RxReact.Component {
+  static defaultProps = {
+    observeOn: new Rx.Subject(),
+    publishOn: new Rx.Subject()
+  }
+
   constructor(props){
     super(props);
+
     this.parentSubject = new Rx.Subject();
-    var aux = this.parentSubject.merge(this.props.observeOn);
-    this.childrenObservable = aux;
-    this.labelObs = aux.do(console.log).map(x => x.data[field]).filter(isDefined).map(x => {data: x});
-    // this.labelObs = propagableObsevable(this.childrenObservable, 'labelProps').do(x => console.log(x))
-    this.inputObs = propagableObsevable(this.childrenObservable, 'inputProps');
+    this.childrenObservable = this.parentSubject.merge(this.props.observeOn);
+
+    this.labelObs = this.childrenObservable.map(x => { return { data: x.data.labelProps }});
+    this.inputObs = this.childrenObservable.map(x => { return { data: x.data.inputProps }});
+
+    //this.labelObs = this.childrenObservable.map(getData).map(x =<)
+    //this.labelObs = propagableObsevable(this.childrenObservable, 'labelProps').do(x => console.log(x))
+    //this.inputObs = propagableObsevable(this.childrenObservable, 'inputProps');
   }
 
   componentDidMount(){
-    this.parentSubject.onNext({data: {labelProps: this.props.labelProps, inputProps: this.props.inputProps}})
+    this.parentSubject.onNext({data: {
+      labelProps: this.props.labelProps,
+      inputProps: this.props.inputProps
+    }})
   }
-
-  static defaultProps = { observeOn: new Rx.Subject(), publishOn: new Rx.Subject() }
   
   getStateStream(){ return this.props.observeOn.map(getData) }
 
