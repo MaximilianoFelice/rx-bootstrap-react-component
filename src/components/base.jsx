@@ -10,6 +10,7 @@ export default class BaseComponent extends RxReact.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.state = this.props
   }
 
   getStateStream() { return this.props.observeOn; }
