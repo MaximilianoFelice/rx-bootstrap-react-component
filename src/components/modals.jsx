@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Rx from 'rx';
-var StateStreamMixin = require('rx-react').StateStreamMixin;
+import RxReact from 'rx-react';
+import BaseComponent from './base';
 
-export default class Modal extends React.Component {
+export default class Modal extends BaseComponent {
+  constructor(props){
+    super(props);
+    this.state.eventStream = new Rx.Subject();
+  }
 
   static propTypes = {
     header: React.PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.string]),
@@ -11,13 +16,17 @@ export default class Modal extends React.Component {
     footer: React.PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.string])
   }
 
-  getStateStream(){ return this.props.observeOn }
+  componentDidMount() { 
+    this.props.observeOn.subscribe(() => triggerEvent()) 
+  }
 
-  componentWillMount = StateStreamMixin.componentWillMount
+  componentDidUpdate(){
+    this.state.eventStream.filter(x => x.type == "event").subscribe(x => triggerEvent(x.name))
+  }
 
-  componentWillUnMount = StateStreamMixin.componentWillUnMount
-
-  componentDidMount() { this.props.observeOn.subscribe(_ => $(ReactDOM.findDOMNode(this.refs.ModalName)).modal()) }
+  triggerEvent(e = 'show'){
+    $(ReactDOM.findDOMNode(this.refs.ModalName)).modal(e)
+  }
 
   header(){ if(this.state && this.state.header) return <ModalHeader text={this.state.header()} /> }
 
