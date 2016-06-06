@@ -16,12 +16,14 @@ export default class Modal extends BaseComponent {
     footer: React.PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.string])
   }
 
-  componentDidMount() { 
-    this.props.observeOn.subscribe(() => triggerEvent()) 
+  componentDidMount() {
+    this.props.observeOn.subscribe(() => this.triggerEvent())
   }
 
-  componentDidUpdate(){
-    this.state.eventStream.filter(x => x.type == "event").subscribe(x => triggerEvent(x.name))
+  componentDidUpdate() {
+    this.state.eventStream
+      .filter(x => x.type == "event")
+      .subscribe(x => this.triggerEvent(x.name))
   }
 
   triggerEvent(e = 'show'){
