@@ -58,7 +58,7 @@ describe('Input', function() {
       instance.labelObs.subscribe(x => resolve(x));
     });
     instance.componentDidMount();
-    return expect(inputText).to.eventually.deep.equal({data: {text: "foo"}});
+    return expect(inputText).to.eventually.deep.equal({text: "foo"});
   });
 
   it('should render an InputField with a errors', function(){
@@ -69,6 +69,6 @@ describe('Input', function() {
       instance.errorsObs.subscribe(x => resolve(x));
     });
     instance.componentDidMount();
-    return expect(inputText).to.eventually.deep.equal({data: {errors: errors}});
+    return expect(inputText).to.eventually.deep.equal({errors: errors});
   });
 });

@@ -29,7 +29,7 @@ describe('Label', function() {
 
   it('should correctly render data from observable', function(){
     renderer.render(<Label observeOn={subject} />)
-    scheduler.scheduleAbsolute(null, 100, () => subject.onNext({data: {text: "foo"}}));
+    scheduler.scheduleAbsolute(null, 100, () => subject.onNext({text: "foo"}));
     scheduler.scheduleAbsolute(null, 150, () => expect(renderer.getRenderOutput().props.children).to.be.equal("foo"));
     scheduler.start();
   })

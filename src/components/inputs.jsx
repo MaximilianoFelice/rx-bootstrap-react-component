@@ -13,17 +13,17 @@ export class InputField extends BaseComponent {
 
     this.labelObs =
       this.parentSubject
-        .map(x => { return { data: x.data.labelProps }})
+        .map(x => { return x.data.labelProps })
         .merge(this.props.observeOn);
     
     this.inputObs =
       this.parentSubject
-        .map(x => { return { data: x.data.inputProps }})
+        .map(x => { return x.data.inputProps })
         .merge(this.props.observeOn);
 
     this.errorsObs =
       this.parentSubject
-        .map(x => { return { data: x.data.errors }})
+        .map(x => { return x.data.errors })
         .merge(this.props.observeOn);
   }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import Rx from 'rx';
 import RxReact from 'rx-react';
-import {getData} from '../helpers';
 
 export default class Label extends RxReact.Component{
   constructor(props){
@@ -10,7 +9,7 @@ export default class Label extends RxReact.Component{
   }
   static defaultProps = {observeOn: new Rx.Subject()}
 
-  getStateStream(){ return this.props.observeOn.map(getData) }
+  getStateStream(){ return this.props.observeOn; }
 
   render(){
     return <span>{this.state.text}</span>
