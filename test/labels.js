@@ -6,7 +6,7 @@ import {Label, Input, InputField} from '../src/index';
 import Rx from 'rx';
 import Promise from 'when';
 
-describe('Input', function() {
+describe('Label', function() {
 
   var renderer;
   var subject;

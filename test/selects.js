@@ -6,7 +6,7 @@ import {Select} from '../src/index';
 import Rx from 'rx';
 import Promise from 'when';
 
-describe('Input', function() {
+describe('Select', function() {
 
   var renderer;
   var subject;
