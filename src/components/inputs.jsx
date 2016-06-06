@@ -10,14 +10,21 @@ export class InputField extends BaseComponent {
     super(props);
 
     this.parentSubject = new Rx.Subject();
-    this.childrenObservable = this.parentSubject.merge(this.props.observeOn);
 
     this.labelObs =
-      this.childrenObservable.map(x => { return { data: x.data.labelProps }});
+      this.parentSubject
+        .map(x => { return { data: x.data.labelProps }})
+        .merge(this.props.observeOn);
+    
     this.inputObs =
-      this.childrenObservable.map(x => { return { data: x.data.inputProps }});
+      this.parentSubject
+        .map(x => { return { data: x.data.inputProps }})
+        .merge(this.props.observeOn);
+
     this.errorsObs =
-      this.childrenObservable.map(x => { return { data: x.data.errors }});
+      this.parentSubject
+        .map(x => { return { data: x.data.errors }})
+        .merge(this.props.observeOn);
   }
 
   componentDidMount(){
