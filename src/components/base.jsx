@@ -1,5 +1,6 @@
 import RxReact from 'rx-react';
 import Rx from 'rx';
+import deepAssign from 'deep-assign';
 
 export default class BaseComponent extends RxReact.Component {
   static defaultProps = {
@@ -10,7 +11,7 @@ export default class BaseComponent extends RxReact.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.state = this.props
+    this.state = deepAssign({}, this.props)
   }
 
   getStateStream() { return this.props.observeOn; }
