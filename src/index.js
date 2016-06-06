@@ -4,5 +4,6 @@ import Modal from './components/modals';
 import Label from './components/label';
 import {Select} from './components/selects';
 import helpers from './helpers';
+import BaseComponent from './components/base';
 
-export {Input, Button, Modal, InputField, Label, Select};
+export {Input, Button, Modal, InputField, Label, Select, BaseComponent};
