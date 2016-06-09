@@ -13,7 +13,7 @@ export default class BaseComponent extends RxReact.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.state = deepAssign({}, this.props)
+    this.state = deepAssign({}, this.props);
   }
 
   getStateStream() { return this.props.observeOn; }

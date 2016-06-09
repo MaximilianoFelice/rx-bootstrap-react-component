@@ -1,62 +1,65 @@
 import React from 'react';
 import Rx from 'rx';
 import RxReact from 'rx-react';
-import {isDefined, getData, propagable, propagableObsevable} from '../helpers';
+//import {isDefined, getData, propagable, propagableObsevable} from '../helpers';
+import {isDefined} from '../helpers';
 import Label from './label';
-import BaseComponent from "./base"
+import BaseComponent from "./base";
 
 export class InputField extends BaseComponent {
   constructor(props){
     super(props);
 
-    this.parentSubject = new Rx.Subject();
-
     this.labelObs =
-      this.parentSubject
-        .map(x => { return x.data.labelProps })
-        .merge(this.props.observeOn);
-    
+      this.props.observeOn
+        .map(state => state && state.labelProps)
+        .merge(new Rx.BehaviorSubject(this.state.labelProps))
+        .filter(isDefined);
+
     this.inputObs =
-      this.parentSubject
-        .map(x => { return x.data.inputProps })
-        .merge(this.props.observeOn);
+      this.props.observeOn
+        .map(state => state && state.inputProps)
+        .merge(new Rx.BehaviorSubject(this.state.inputProps))
+        .filter(isDefined);
 
     this.errorsObs =
-      this.parentSubject
-        .map(x => { return x.data.errors })
-        .merge(this.props.observeOn);
-  }
-
-  componentDidMount(){
-    this.parentSubject.onNext({data: {
-      labelProps: this.props.labelProps,
-      inputProps: this.props.inputProps,
-      errors: this.props.errors
-    }})
-  }
-
-  render(){return (
-    <div>
-      <Label observeOn={this.labelObs} />
-      <Input observeOn={this.inputObs} />
-    </div>
-  )}
-}
-
-export class Input extends BaseComponent {
-  render(){return (
-    <input {...propagable(this.props, this.state)} />
-  )}
-}
-
-export class InputErrors extends BaseComponent {
-  renderErrorMessage(str) {
-    return <span className="help-block">{str}</span>;
+      this.props.observeOn
+        .map(state => state.errors)
+        .merge(new Rx.BehaviorSubject(this.state.errors))
+        .filter(isDefined)
+        .map(errors => { return {errors} })
   }
 
   render() {
-    return <div>
-      {this.state.errors.map(this.renderErrorMessage)}
-    </div>;
+    return (
+      <div>
+        <Label observeOn={this.labelObs}/>
+        <Input observeOn={this.inputObs}/>
+        <InputErrors observeOn={this.errorsObs}/>
+      </div>
+    )
+  }
+}
+
+export class Input extends BaseComponent {
+  render() { return <input{...this.state}/>; }
+}
+
+export class InputErrors extends BaseComponent {
+  renderErrorMessage(str, i) {
+    return (
+      <span 
+        key={`error-message-${i}`}
+        className="help-block"
+      >{str}</span>
+    );
+  }
+
+  render() {
+    const errors =
+      isDefined(this.state.errors) &&
+      this.state.errors.map(this.renderErrorMessage);
+
+    return <div>{errors}</div>;
   }
 }
