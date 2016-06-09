@@ -3,10 +3,12 @@ import Rx from 'rx';
 import deepAssign from 'deep-assign';
 
 export default class BaseComponent extends RxReact.Component {
-  static defaultProps = {
-    observeOn: new Rx.Subject(),
-    publishOn: new Rx.Subject()
-  };
+  static get defaultProps() {
+    return {
+      observeOn: new Rx.Subject(),
+      publishOn: new Rx.Subject()
+    };
+  }
 
   constructor(props) {
     super(props);
