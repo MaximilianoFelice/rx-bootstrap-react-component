@@ -40,7 +40,12 @@ export class InputField extends BaseComponent {
 }
 
 export class Input extends BaseComponent {
-  render() { return <input{...this.state}/>; }
+  render() {
+    return <input
+      className={this.state.className || "form-control"}
+      {...this.state}
+    />;
+  }
 }
 
 export class InputErrors extends BaseComponent {
