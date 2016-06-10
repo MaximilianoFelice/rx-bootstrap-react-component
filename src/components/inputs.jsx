@@ -30,7 +30,7 @@ export class InputField extends BaseComponent {
 
   render() {
     return (
-      <div className={`form-group ${this.hasError() && "has_error"}`}>
+      <div className={`form-group ${this.hasError() && "has-error"}`}>
         <Label observeOn={this.labelObs} {...this.state.labelProps}/>
         <Input observeOn={this.inputObs} {...this.state.inputProps}/>
         <InputErrors observeOn={this.errorsObs} errors={this.state.errors}/>
