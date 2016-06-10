@@ -16,5 +16,7 @@ export default class BaseComponent extends RxReact.Component {
     this.state = deepAssign({}, this.props);
   }
 
+  componentWillReceiveProps(props) { this.setState(props); }
+
   getStateStream() { return this.props.observeOn; }
 }
