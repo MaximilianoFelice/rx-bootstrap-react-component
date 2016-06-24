@@ -4,9 +4,14 @@ import RxReact from 'rx-react';
 import BaseComponent from "./base";
 
 export class Tab extends BaseComponent {
+
+  className(){
+    return `tab-pane ${this.props.active && "active"} ${this.props.paneClassName}`
+  }
+
   render(){
     return(
-      <div className={this.props.active ? "tab-pane active" : "tab-pane"}>
+      <div className={this.className()}>
         {this.props.children}
       </div>
     )
@@ -28,7 +33,7 @@ export class Tabs extends BaseComponent {
     if (!this.state.tabs) return;
 
     return (
-      <ul className="nav nav-tabs">
+      <ul className={`nav nav-tabs ${this.props.className}`}>
         {this.state.tabs.map((t, i) =>
           this._renderNavLink(t, i)
         )}
@@ -40,7 +45,7 @@ export class Tabs extends BaseComponent {
     return ( 
       <li
         key={`tabs-nav-link-${i}-${tab.props.name}`}
-        className={this.state.activeTab === tab && "active"}>
+        className={`${this.state.activeTab === tab && "active"} ${tab.props.className}`}>
         <a
           onClick={_ => this.setState({activeTab: tab})}
           style={{cursor: "pointer"}}>
@@ -55,7 +60,7 @@ export class Tabs extends BaseComponent {
       <div>
         {this._renderNav()}
 
-        <div className="tab-content">
+        <div className={`tab-content ${this.props.paneClassName}`}>
           {this.state.tabs.map( tab => {
             return React.cloneElement(tab, {active: tab == this.state.activeTab, key: tab.props.name})
           })}
