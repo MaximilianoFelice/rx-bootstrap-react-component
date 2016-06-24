@@ -5,7 +5,7 @@ import {isDefined} from '../helpers';
 import Label from './label';
 import BaseComponent from "./base";
 
-export class InputField extends BaseComponent {
+export class UserEditableField extends BaseComponent {
   constructor(props){
     super(props);
 
@@ -28,14 +28,24 @@ export class InputField extends BaseComponent {
 
   hasError() { return this.state.errors && this.state.errors.length; }
 
+  renderField(){
+    return(<div></div>)
+  }
+
   render() {
     return (
       <div className={`form-group ${this.hasError() && "has-error"}`}>
         <Label observeOn={this.labelObs} {...this.state.labelProps}/>
-        <Input observeOn={this.inputObs} {...this.state.inputProps}/>
+        {this.renderField()}
         <InputErrors observeOn={this.errorsObs} errors={this.state.errors}/>
       </div>
     )
+  }
+}
+
+export class InputField extends UserEditableField {
+  renderField(){
+    return(<Input observeOn={this.inputObs} {...this.state.inputProps}/>)
   }
 }
 
