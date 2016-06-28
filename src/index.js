@@ -1,4 +1,5 @@
-import {InputField, Input, InputErrors, TextareaField, Textarea} from './components/inputs'
+import {InputField, Input, InputErrors} from './components/inputs'
+import {Textarea, TextareaField} from './components/textareas'
 import Button from './components/buttons'
 import Modal from './components/modals'
 import Label from './components/label'

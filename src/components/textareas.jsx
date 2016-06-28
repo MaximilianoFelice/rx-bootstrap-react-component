@@ -1,9 +1,8 @@
 import React from 'react';
 import Rx from 'rx';
 import RxReact from 'rx-react';
-import Label from './label';
 import BaseComponent from "./base";
-import UserEditableField from "./inputs";
+import {UserEditableField} from "./inputs";
 
 export class TextareaField extends UserEditableField {
   renderField(){
@@ -14,11 +13,9 @@ export class TextareaField extends UserEditableField {
 export class Textarea extends BaseComponent {
   render() {
     return(
-      <div>
-        <textarea className={this.state.className || "form-control"} {...this.state}>
-          {this.state.content || this.props.children}
-        </textarea>
-      </div>
+      <textarea className={this.state.className || "form-control"} {...this.state}>
+        {this.state.content || this.props.children}
+      </textarea>
     )
   }
 }
