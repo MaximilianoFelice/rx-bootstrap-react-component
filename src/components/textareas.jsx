@@ -14,9 +14,11 @@ export class TextareaField extends UserEditableField {
 export class Textarea extends BaseComponent {
   render() {
     return(
-      <textarea className={this.state.className || "form-control"} {...this.state}>
-        {this.state.content || this.props.children}
-      </textarea>
+      <div>
+        <textarea className={this.state.className || "form-control"} {...this.state}>
+          {this.state.content || this.props.children}
+        </textarea>
+      </div>
     )
   }
 }
