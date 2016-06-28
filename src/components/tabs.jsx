@@ -38,11 +38,11 @@ export class Tabs extends BaseComponent {
   }
 
   moveTabForwards(){
-    this.moveTab(1)
+    this._moveTab(1)
   }
 
   moveTabBackwards(){
-    this.moveTab(-1)
+    this._moveTab(-1)
   }
 
   _moveTab(units){
