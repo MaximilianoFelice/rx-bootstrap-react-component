@@ -27,6 +27,27 @@ export class Tabs extends BaseComponent {
     this.state.activeTab =
       this.state.tabs.find(c => c.props.active) ||
       this.state.tabs[0];
+
+    this.props.observeTransitionsOn
+      .filter( e => e.name === "previousTab" )
+      .subscribe( _ => this.moveTabBackwards())
+
+    this.props.observeTransitionsOn
+      .filter( e => e.name === "nextTab" )
+      .subscribe( _ => this.moveTabForwards())
+  }
+
+  moveTabForwards(){
+    this.moveTab(1)
+  }
+
+  moveTabBackwards(){
+    this.moveTab(-1)
+  }
+
+  _moveTab(units){
+    const activeIndex = this.state.tabs.findIndex( tab => tab === this.state.activeTab )
+    this.setState({activeTab: this.state.tabs[activeIndex + units]})
   }
 
   _renderNav() {
