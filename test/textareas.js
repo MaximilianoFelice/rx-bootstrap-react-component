@@ -30,4 +30,9 @@ describe('Textarea', function() {
     const markup = ReactDOMServer.renderToString(<Textarea />)
     expect(markup).to.match(/<textarea/)
   });
+
+  it("should render a TextareaField", function(){
+    const markup = ReactDOMServer.renderToString(<TextareaField />)
+    expect(markup).to.match(/<textarea/)
+  });
 });
