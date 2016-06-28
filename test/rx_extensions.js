@@ -15,7 +15,7 @@ describe('Select', function() {
   it('should correctly instantiate acumulative subjects', function(){
     // const subject = new RxExtensions.AcumulativeSubject({foo: 3})
     const subject = new Rx.BehaviorSubject({foo: 3})
-    const obs = subject.scan((acc, x) => {var ls = deepAssign({}, acc, x); return ls})
+    const obs = subject.scan((acc, x) => deepAssign({}, acc, x))
     var partial
     obs.subscribe(x => partial = x)
     scheduler.scheduleAbsolute(null, 0, () => expect(partial).to.deep.equals({foo: 3}));
