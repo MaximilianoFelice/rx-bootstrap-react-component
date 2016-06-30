@@ -28,13 +28,15 @@ export class Tabs extends BaseComponent {
       this.state.tabs.find(c => c.props.active) ||
       this.state.tabs[0];
 
-    this.props.observeTransitionsOn
-      .filter( e => e.name === "previousTab" )
-      .subscribe( _ => this.moveTabBackwards())
+    if(this.props.observeTransitionsOn) {
+      this.props.observeTransitionsOn
+        .filter( e => e.name === "previousTab" )
+        .subscribe( _ => this.moveTabBackwards())
 
-    this.props.observeTransitionsOn
-      .filter( e => e.name === "nextTab" )
-      .subscribe( _ => this.moveTabForwards())
+      this.props.observeTransitionsOn
+        .filter( e => e.name === "nextTab" )
+        .subscribe( _ => this.moveTabForwards())
+    }
   }
 
   moveTabForwards(){
