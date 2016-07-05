@@ -13,7 +13,8 @@ export class Tab extends BaseComponent {
   componentWillMount(){
     super.componentWillMount()
     
-    this.props.observerErrorsOn
+    this.props.observeErrorsOn && 
+    this.props.observeErrorsOn
       .subscribe( x => this.setState({errors: !(x === undefined || x === null)}) )
   }
 
