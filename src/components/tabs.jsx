@@ -100,7 +100,7 @@ export class Tabs extends BaseComponent {
         key={`tabs-nav-link-${i}-${tab.props.name}`}
         className={tab.props.className}
         active={this.state.activeTab === tab}
-        observeErrorsOn={tab.props.observerErrorsOn}
+        observeErrorsOn={tab.props.observeErrorsOn}
       >
         <a
           onClick={_ => this.setState({activeTab: tab})}
