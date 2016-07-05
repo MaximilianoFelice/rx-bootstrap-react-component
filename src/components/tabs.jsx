@@ -5,8 +5,24 @@ import BaseComponent from "./base";
 
 export class Tab extends BaseComponent {
 
+  constructor(props){
+    super(props)
+    this.state.errors = false
+  }
+
+  componentWillMount(){
+    super.componentWillMount()
+    
+    this.props.observerErrorsOn
+      .subscribe( x => this.setState({errors: !(x === undefined || x === null)}) )
+  }
+
+  errorClassName(){
+    return this.state.errors ? "error-tab" : ""
+  }
+
   className(){
-    return `tab-pane ${this.props.active && "active"} ${this.props.paneClassName}`
+    return `tab-pane ${this.props.active && "active"} ${this.props.paneClassName} ${this.errorClassName()}`
   }
 
   render(){
