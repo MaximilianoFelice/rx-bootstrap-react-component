@@ -5,6 +5,21 @@ import BaseComponent from "./base";
 
 export class Tab extends BaseComponent {
 
+  className(){
+    return `tab-pane ${this.props.active && "active"} ${this.props.paneClassName}`
+  }
+
+  render(){
+    return(
+      <div className={this.className()}>
+        {this.props.children}
+      </div>
+    )
+  }
+}
+
+export class TabNavLink extends BaseComponent{
+
   constructor(props){
     super(props)
     this.state.errors = false
@@ -12,7 +27,7 @@ export class Tab extends BaseComponent {
 
   componentWillMount(){
     super.componentWillMount()
-    
+
     this.props.observeErrorsOn && 
     this.props.observeErrorsOn
       .subscribe( x => this.setState({errors: !(x === undefined || x === null)}) )
@@ -22,15 +37,13 @@ export class Tab extends BaseComponent {
     return this.state.errors ? "error-tab" : ""
   }
 
-  className(){
-    return `tab-pane ${this.props.active && "active"} ${this.props.paneClassName} ${this.errorClassName()}`
-  }
-
   render(){
     return(
-      <div className={this.className()}>
+      <li
+        className={`${this.props.active && "active"} ${this.props.className} ${this.errorClassName()}`}
+      >
         {this.props.children}
-      </div>
+      </li>
     )
   }
 }
@@ -82,16 +95,19 @@ export class Tabs extends BaseComponent {
   }
 
   _renderNavLink(tab, i) {
-    return ( 
-      <li
+    return (
+      <TabNavLink 
         key={`tabs-nav-link-${i}-${tab.props.name}`}
-        className={`${this.state.activeTab === tab && "active"} ${tab.props.className}`}>
+        className={tab.props.className}
+        active={this.state.activeTab === tab}
+        observeErrorsOn={tab.props.observerErrorsOn}
+      >
         <a
           onClick={_ => this.setState({activeTab: tab})}
           style={{cursor: "pointer"}}>
             {tab.props.name}
         </a>
-      </li>
+      </TabNavLink>
     )
   }
 

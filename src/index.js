@@ -6,9 +6,9 @@ import Label from './components/label'
 import {Select, SelectField} from './components/selects'
 import helpers from './helpers'
 import BaseComponent from './components/base'
-import {Tabs, Tab} from './components/tabs'
+import {Tabs, Tab, TabNavLink} from './components/tabs'
 
 export {Input, Button, Modal, InputField, 
         Label, Select, SelectField, BaseComponent, 
         InputErrors, TextareaField, Textarea,
-        Tabs, Tab};
+        Tabs, Tab, TabNavLink};
