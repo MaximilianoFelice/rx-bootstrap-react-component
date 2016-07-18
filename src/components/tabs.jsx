@@ -103,7 +103,7 @@ export class Tabs extends BaseComponent {
         observeErrorsOn={tab.props.observeErrorsOn}
       >
         <a
-          onClick={_ => this.setState({activeTab: tab})}
+          onClick={_ => !tab.props.disabled && this.setState({activeTab: tab})}
           style={{cursor: "pointer"}}>
             {tab.props.name}
         </a>
