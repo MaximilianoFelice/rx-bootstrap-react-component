@@ -39,7 +39,7 @@ export class Button extends React.Component {
 export class ButtonLoader extends BaseComponent{
   constructor(props){
     super(props)
-    this.state.buttonState = this.props.state || ""
+    this.state.buttonRefName = this._buttonRandomRef()
   }
 
   componentWillMount(){
@@ -48,14 +48,22 @@ export class ButtonLoader extends BaseComponent{
     this.props.observeOn &&
     this.props.observeOn
       .filter( x => x.action === "change" )
-      .subscribe( x => this.setState({buttonState: x.content}) )
+      .subscribe( x => this.fireAnimation() )
+  }
+
+  _buttonRandomRef(){
+    return `buttonLoader-${Math.floor(Math.random()*10000)}`
+  }
+
+  fireAnimation(){
+    this.refs[this.state.buttonRefName][x.content]()
   }
 
   render(){
     return(
       <ProgressButton 
-        state={this.state.buttonState} 
-        {...propagable(this.props, this.state, ["buttonState", "state"])}
+        {...propagable(this.props, {})}
+        ref={this.state.buttonRefName}
       >
         {this.props.children}
       </ProgressButton>
