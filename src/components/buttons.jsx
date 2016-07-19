@@ -48,15 +48,15 @@ export class ButtonLoader extends BaseComponent{
     this.props.observeOn &&
     this.props.observeOn
       .filter( x => x.action === "change" )
-      .subscribe( x => this.fireAnimation() )
+      .subscribe( x => this.fireAnimation(x.content) )
   }
 
   _buttonRandomRef(){
     return `buttonLoader-${Math.floor(Math.random()*10000)}`
   }
 
-  fireAnimation(){
-    this.refs[this.state.buttonRefName][x.content]()
+  fireAnimation(animation){
+    this.refs[this.state.buttonRefName][animation]()
   }
 
   render(){
