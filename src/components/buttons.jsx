@@ -22,7 +22,7 @@ export default class Button extends React.Component {
 
   render() {
     return (
-      <button {...propagable(this.props, this.state)} 
+      <button {...propagable(this.props, this.state, ["as", "text"])} 
         className={`btn ${this.props.className} btn-${this.props.as}`} 
         onClick={this.buttonClicked} 
         type={this.props.type} 

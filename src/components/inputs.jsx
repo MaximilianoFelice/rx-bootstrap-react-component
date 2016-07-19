@@ -1,7 +1,7 @@
 import React from 'react';
 import Rx from 'rx';
 import RxReact from 'rx-react';
-import {isDefined} from '../helpers';
+import {isDefined, propagable} from '../helpers';
 import Label from './label';
 import BaseComponent from "./base";
 
@@ -53,7 +53,7 @@ export class Input extends BaseComponent {
   render() {
     return <input
       className={this.state.className || "form-control"}
-      {...this.state}
+      {...propagable(this.props, this.state)}
     />;
   }
 }

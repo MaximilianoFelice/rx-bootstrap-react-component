@@ -37,7 +37,7 @@ export default class Modal extends BaseComponent {
   footer(){ if(this.state && this.state.footer) return <ModalFooter>{this.state.footer()}</ModalFooter> }
 
   render() { return (
-      <div className="modal fade" tabindex="-1" role="dialog" ref="ModalName">
+      <div className="modal fade" tabIndex="-1" role="dialog" ref="ModalName">
         <div className="modal-dialog">
           <div className="modal-content">
             {this.header()}
