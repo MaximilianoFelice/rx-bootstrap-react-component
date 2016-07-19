@@ -1,9 +1,11 @@
 import React from 'react';
 import Rx from 'rx';
+import ProgressButton from 'react-progress-button';
 import {propagable} from '../helpers';
+import BaseComponent from './base';
 var FuncSubject = require('rx-react').FuncSubject;
 
-export default class Button extends React.Component {
+export class Button extends React.Component {
 
   constructor(props){
     super(props);
@@ -32,3 +34,31 @@ export default class Button extends React.Component {
     )
   }
 };
+
+
+export class ButtonLoader extends BaseComponent{
+  constructor(props){
+    super(props)
+    this.state.buttonState = this.props.state || ""
+  }
+
+  componentWillMount(){
+    super.componentWillMount()
+    
+    this.props.observeOn &&
+    this.props.observeOn
+      .filter( x => x.action === "change" )
+      .subscribe( x => this.setState({buttonState: x.content}) )
+  }
+
+  render(){
+    return(
+      <ProgressButton 
+        state={this.state.buttonState} 
+        {...propagable(this.props, this.state, ["buttonState", "state"])}
+      >
+        {this.props.children}
+      </ProgressButton>
+    )
+  }
+}

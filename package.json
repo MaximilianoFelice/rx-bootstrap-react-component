@@ -32,6 +32,7 @@
     "deep-assign": "^2.0.0",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
+    "react-progress-button": "^5.0.0",
     "rx": "^4.1.0",
     "rx-jquery": "^1.1.7",
     "rx-react": "git+https://github.com/MaximilianoFelice/rx-react.git"
