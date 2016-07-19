@@ -13,8 +13,11 @@ export function without(keys, object){
   return copy;
 };
 
-export function propagable(props, state){
-  return without('observeOn', 'publishOn', Object.assign.apply(this, [{}].concat(argsToArray(arguments))));
+export function propagable(props, state, omit = []) {
+  return without(
+    ['observeOn', 'publishOn'].concat(omit), 
+    Object.assign.apply(this, [{}].concat(argsToArray(arguments).slice(0,2)))
+  );
 };
 
 export function propagableObsevable(observable, field){
