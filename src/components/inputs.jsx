@@ -32,11 +32,18 @@ export class UserEditableField extends BaseComponent {
     return(<div></div>)
   }
 
+  renderHint(){
+    if(!this.state.hint) return(null)
+        
+    return(<span className="hint">{this.state.hint}</span>)
+  }
+
   render() {
     return (
       <div className={`form-group ${this.hasError() && "has-error"}`}>
         <Label observeOn={this.labelObs} {...this.state.labelProps}/>
         {this.renderField()}
+        {this.renderHint()}
         <InputErrors observeOn={this.errorsObs} errors={this.state.errors}/>
       </div>
     )
