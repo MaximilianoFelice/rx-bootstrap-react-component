@@ -3,7 +3,7 @@ import Rx from 'rx';
 import ProgressButton from 'react-progress-button';
 import {propagable} from '../helpers';
 import BaseComponent from './base';
-import VisibilitySensor from 'react-visibility-sensor';
+import Waypoint from 'react-waypoint';
 var FuncSubject = require('rx-react').FuncSubject;
 
 export class Button extends React.Component {
@@ -53,7 +53,11 @@ export class ButtonLoader extends BaseComponent{
   }
 
   _buttonRandomRef(){
-    return `buttonLoader-${Math.floor(Math.random()*10000)}`
+    return `buttonLoader-${this._randomNumber()}`
+  }
+
+  _randomNumber(){
+    return Math.floor(Math.random()*10000)
   }
 
   fireAnimation(animation){
@@ -88,7 +92,7 @@ export class InfiniteScrollButton extends ButtonLoader{
     return(
       <div>
         {super.render()}
-        <VisibilitySensor onChange={this.fireButtonClick} />
+        <Waypoint onEnter={this.fireButtonClick} key={`waypoint-${this._randomNumber()}`} />
       </div>
     )
   }
