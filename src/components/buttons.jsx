@@ -75,13 +75,13 @@ export class ButtonLoader extends BaseComponent{
 export class InfiniteScrollButton extends ButtonLoader{
   
   _isButtonClickeable(){
-    return this.state.buttonState != "loading" && this.state.buttonState != "disabled"
+    return this.state.buttonState !== "loading" && this.state.buttonState !== "disable"
   }
 
   fireButtonClick = () => {
     if(!this._isButtonClickeable()) return;
     this.fireAnimation("loading")
-    this.onClick()
+    this.props.onClick()
   }
 
   render(){
