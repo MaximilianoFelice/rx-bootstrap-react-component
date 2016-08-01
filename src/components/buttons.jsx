@@ -3,6 +3,7 @@ import Rx from 'rx';
 import ProgressButton from 'react-progress-button';
 import {propagable} from '../helpers';
 import BaseComponent from './base';
+import VisibilitySensor from 'react-visibility-sensor';
 var FuncSubject = require('rx-react').FuncSubject;
 
 export class Button extends React.Component {
