@@ -92,7 +92,10 @@ export class InfiniteScrollButton extends ButtonLoader{
     return(
       <div>
         {super.render()}
-        <Waypoint onEnter={this.fireButtonClick} key={`waypoint-${this._randomNumber()}`} />
+        <Waypoint 
+          onEnter={this.fireButtonClick} 
+          key={`waypoint-${this._randomNumber()}`} 
+          fireOnRapidScroll={false} />
       </div>
     )
   }
