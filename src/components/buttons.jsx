@@ -48,7 +48,7 @@ export class ButtonLoader extends BaseComponent{
     this.props.observeOn &&
     this.props.observeOn
       .filter( x => x.action === "change" )
-      .subscribe( x => this.fireAnimation(x.content) )
+      .subscribe( x => this.setState({buttonState: x.content}, () => this.fireAnimation(x.content)) )
   }
 
   _buttonRandomRef(){
@@ -67,6 +67,28 @@ export class ButtonLoader extends BaseComponent{
       >
         {this.props.children}
       </ProgressButton>
+    )
+  }
+}
+
+export class InfiniteScrollButton extends ButtonLoader{
+  
+  _isButtonClickeable(){
+    return this.state.buttonState != "loading" && this.state.buttonState != "disabled"
+  }
+
+  fireButtonClick = () => {
+    if(!this._isButtonClickeable()) return;
+    this.fireAnimation("loading")
+    this.onClick()
+  }
+
+  render(){
+    return(
+      <div>
+        {super.render()}
+        <VisibilitySensor onChange={this.fireButtonClick} />
+      </div>
     )
   }
 }
